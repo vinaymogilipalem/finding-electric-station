@@ -1,0 +1,20 @@
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+*.db
+backend/ev_chargehub.db
+.env
+backend/.env
+venv/
+.venv/
+env/
+
+# Node/Frontend
+node_modules/
+dist/
+dist-ssr
+*.local
+.vscode/
+.idea/
+.DS_Store

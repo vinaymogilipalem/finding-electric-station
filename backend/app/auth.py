@@ -40,20 +40,26 @@ from passlib.context import CryptContext
 
 # ─────────────────────────────────────────
 # CONFIGURATION
-# These should be moved to environment variables in production
+# Loaded dynamically from environment variables (fallback to development defaults)
 # ─────────────────────────────────────────
+import os
+from dotenv import load_dotenv
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+env_path = os.path.join(BASE_DIR, ".env")
+load_dotenv(dotenv_path=env_path)
 
 # Secret key used to sign JWT tokens - CHANGE IN PRODUCTION
-SECRET_KEY = "ev-chargehub-secret-key-change-in-production-2024"
+SECRET_KEY = os.getenv("SECRET_KEY", "ev-chargehub-secret-key-change-in-production-2024")
 
 # JWT signing algorithm (HS256 = HMAC with SHA-256)
-ALGORITHM = "HS256"
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
 
 # Access tokens expire after 60 minutes for security
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
 
 # Refresh tokens stay valid for 7 days
-REFRESH_TOKEN_EXPIRE_DAYS = 7
+REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS", "7"))
 
 
 # ─────────────────────────────────────────

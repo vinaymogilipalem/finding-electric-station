@@ -39,48 +39,72 @@ def seed_database(db: Session):
 
     # ─────────────────────────────────────────
     # USERS
-    # Create 1 admin + 3 regular users
+    # Create 1 admin + 3 regular users loaded from environment variables
     # ─────────────────────────────────────────
+    import os
+    from dotenv import load_dotenv
+
+    # Load env variables from backend/.env
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    env_path = os.path.join(BASE_DIR, ".env")
+    load_dotenv(dotenv_path=env_path)
+
+    # Get credentials from env, using the previous values as secure fallbacks
+    admin_email = os.getenv("ADMIN_EMAIL", "admin@evchargehub.com")
+    admin_username = os.getenv("ADMIN_USERNAME", "admin")
+    admin_password = os.getenv("ADMIN_PASSWORD", "Admin@123")
+
+    john_email = os.getenv("USER_JOHN_EMAIL", "john@example.com")
+    john_username = os.getenv("USER_JOHN_USERNAME", "john_doe")
+    john_password = os.getenv("USER_JOHN_PASSWORD", "User@123")
+
+    sarah_email = os.getenv("USER_SARAH_EMAIL", "sarah@example.com")
+    sarah_username = os.getenv("USER_SARAH_USERNAME", "sarah_smith")
+    sarah_password = os.getenv("USER_SARAH_PASSWORD", "User@123")
+
+    mike_email = os.getenv("USER_MIKE_EMAIL", "mike@example.com")
+    mike_username = os.getenv("USER_MIKE_USERNAME", "mike_jones")
+    mike_password = os.getenv("USER_MIKE_PASSWORD", "User@123")
 
     admin = models.User(
-        email="admin@evchargehub.com",
-        username="admin",
+        email=admin_email,
+        username=admin_username,
         full_name="System Administrator",
         phone="9999999999",
-        password_hash=get_password_hash("Admin@123"),
+        password_hash=get_password_hash(admin_password),
         role=models.UserRole.admin,
         is_active=True,
         is_blocked=False,
     )
 
     john = models.User(
-        email="john@example.com",
-        username="john_doe",
+        email=john_email,
+        username=john_username,
         full_name="John Doe",
         phone="9876543210",
-        password_hash=get_password_hash("User@123"),
+        password_hash=get_password_hash(john_password),
         role=models.UserRole.user,
         is_active=True,
         is_blocked=False,
     )
 
     sarah = models.User(
-        email="sarah@example.com",
-        username="sarah_smith",
+        email=sarah_email,
+        username=sarah_username,
         full_name="Sarah Smith",
         phone="9876543211",
-        password_hash=get_password_hash("User@123"),
+        password_hash=get_password_hash(sarah_password),
         role=models.UserRole.user,
         is_active=True,
         is_blocked=False,
     )
 
     mike = models.User(
-        email="mike@example.com",
-        username="mike_jones",
+        email=mike_email,
+        username=mike_username,
         full_name="Mike Jones",
         phone="9876543212",
-        password_hash=get_password_hash("User@123"),
+        password_hash=get_password_hash(mike_password),
         role=models.UserRole.user,
         is_active=True,
         is_blocked=False,
